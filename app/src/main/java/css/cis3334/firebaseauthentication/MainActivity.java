@@ -38,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    /**
+     * This is the onCreate Method. It is run right on startup.
+     * It sets the layout assigns variables to their respected fields on the layout and sets up the onClickListeners for the different buttons
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+     * This passes in the email and password from the text fields and creates a user account. If it is unsuccessful an error message will appear
+     * This is needed with the Firebase
+     * @param email
+     * @param password
+     */
     private void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -119,6 +130,12 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    /*
+     * This method takes the email and the password entered into the text field and checks the database to see if the information matches any saved information
+     * Used with Firebase
+     * @param email
+     * @param password
+     */
     private void signIn(String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -140,6 +157,9 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    /*
+     * signs out of the firebase database
+     */
     private void signOut () {
         mAuth.signOut();
     }
@@ -148,13 +168,18 @@ public class MainActivity extends AppCompatActivity {
         //Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
        // startActivityForResult(signInIntent, GOOGLE_SIGN_IN_FLAG);
     //}
-
+    /*
+     * This method sets the mAuthListener onStart used with Firebase
+     */
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
 
+    /*
+     * This removes the mAuthListener if one exists onStop used with Firebase
+     */
     @Override
     public void onStop() {
         super.onStop();
